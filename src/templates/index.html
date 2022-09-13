@@ -1,0 +1,134 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+<div  class="wrapper-editor">
+    <!-- Para inserir -->
+    <form action="/add" method="post" >
+        
+        <label class="form-label" for="form1">Data</label><br>
+        <input type="date" name="cr_data" id="form1"><br>
+    
+        <label for="codigo">Código</label><br>
+        <select aria-label="Default select example" name="codigo" id="codigo">
+            {% for codigo in codigos %}
+            <option>{{codigo}}</option>    
+            {% endfor %}
+        </select> <br>
+    
+        Quantidade<br>
+        <input type="number" name="quantidade"><br>
+        Valor unitário<br>
+        <input type="number" name="valor_unitario" step="0.01"><br>
+    
+        <label for="tipo_op">Tipo de operação: </label><br>
+        <select name="tipo_op" id="tipo_op">
+            <option value="compra">Compra</option>
+            <option value="venda">Venda</option>
+        </select> <br>
+    
+        Taxa de corretagem<br> <!--Deve mostrar o valor padrão 2.5-->
+        <input type="number" name="tx_corretagem" step="0.1" value="2.5"><br>
+    
+        Taxa B3<br> <!--Deve mostrar o valor padrão 0.03-->
+        <input type="number" name="tx_b3" step="0.01" value="0.03"><br>
+        
+        <button type="submit" class="btn btn-primary">Registro</button>
+    </form>
+
+    <!-- Para exibir -->
+    <table id="dt-less-columns" class="table table-hover text-nowrap" >
+    <!-- <table id="dt-less-columns" class="table table-striped table-bordered" cellspacing="0" width="100%"> -->
+        <thead>
+        <tr>
+            <th>Data</th>
+            <th>Código</th>
+            <th>Quantidade</th>
+            <th>Valor unitário</th>
+            <th>Valor Total</th>
+            <th>Corretagem</th> <!--deve mostrar o valor (R$) calculado-->
+            <th>Taxa B3</th> <!--deve mostrar o valor em (R$) ja calculado-->
+            <th>Tipo de operação</th>
+            <th>Valor da operacao</th>
+        </tr>
+        </thead>
+        <tbody>
+            {% for t in task %}    
+            <tr>
+                <td>
+                    {{ t.cr_data }}
+                </td>
+                <td>
+                    {{ t.codigo }}
+                </td>
+                <td>
+                    {{ t.quantidade }}
+                </td>
+                <td>
+                    {{ t.valor_unitario }}
+                </td>
+                <td>{{ t.valor_total }}</td>
+                <td>
+                    {{ t.tx_corretagem }}
+                </td>
+                <td>
+                    {{ t.tx_b3 }}
+                </td>
+                <td>
+                    {{ t.tipo_op }}
+                </td>
+                <td>
+                    {{ t.valor_operacao }}
+                </td>
+                    
+                <td>
+                    <a href="/{{ t.id }}/" class="btn btn-danger">Excluir</a> 
+                </td>
+                <!-- poup up -->
+                <td>
+                    <a class="btn btn-primary" onclick="openForm('{{t.id}}')">Editar</a>
+                    <form action="/update/{{t.id}}" method="post" class="form-container form-popup" id="{{t.id}}">
+                        <h1>Registro</h1>
+                        <label for="email"><b>Data</b></label>
+                        <input type="date" name="cr_data" value="{{ t.cr_data }}"><br>
+    
+                        <label for="email"><b>Codigo</b></label>
+                        <select name="codigo" id="codigo">
+                            <option selected style="font-weight: bold">{{t.codigo}}</option>
+                            
+                            {% for codigo in codigos %}
+                            <option>{{ codigo }}</option>                            
+                            {% endfor %}
+                        
+                        </select><br>
+    
+                        <label for="email"><b>Quantidade</b></label>
+                        <input type="number" name="quantidade" value="{{ t.quantidade }}"><br>
+    
+                        <label for="email"><b>Valor unitário</b></label>
+                        <input type="number" name="valor_unitario" value="{{ t.valor_unitario }}" step="0.01"><br>
+    
+                        <label for="email"><b>Corretagem</b></label>
+                        <input type="number" name="tx_corretagem" step="0.1" value="2.5"><br>
+    
+                        <label for="psw"><b>Taxa b3</b></label>
+                        <input type="number" name="tx_b3" step="0.01" value="0.03"><br>
+    
+                    
+                        <label for="email"><b>Tipo cde operação</b></label>
+                        <select name="tipo_op" id="tipo_op">
+                            <option selected style="font-weight: bold">{{t.tipo_op}}</option>
+                            <option value="compra">Compra</option>
+                            <option value="venda">Venda</option>
+                        </select><br>
+    
+                        <button type="submit" class="btn">Alterar</button>
+                        <button type="button" class="btn cancel" onclick="closeForm('{{t.id}}')">Close</button>
+                    </form>
+                </td>
+                <!-- meu td normal -->
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock  %}

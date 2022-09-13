@@ -1,0 +1,29 @@
+[tool.poetry]
+name = "todob3_dev"
+version = "0.1.0"
+description = ""
+authors = ["Jooaomar <jmrcl91@gmail.com>"]
+packages = [
+    { include = "src/todob3_dev" }
+]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+fastapi = "^0.82.0"
+SQLAlchemy = "^1.4.41"
+uvicorn = "^0.18.3"
+Jinja2 = "^3.1.2"
+python-multipart = "^0.0.5"
+pandas = "^1.4.4"
+lxml = "^4.9.1"
+
+[tool.poetry.dev-dependencies]
+pytest = "^5.2"
+
+[tool.poetry.scripts]
+app = "src.todob3_dev.main:start"
+criar_tabela = "src.todob3_dev.create_table:criar_tabela"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
