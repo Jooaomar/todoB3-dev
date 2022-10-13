@@ -21,3 +21,5 @@ Na pasta src Execute para criação das tabelas do BD (Obs: requer SQLite3 insta
 
 Execute para desenvolvimento:
 `poetry run app`
+
+OBS: Por favor não leve em conta os erros de código ou qualidade do mesmo, eu sei o quanto preciso melhorar e busco isso. Esse pequeno projeto faz parte de meus estudos para fins didático.
